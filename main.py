@@ -31,6 +31,6 @@ dec = int(input("Enter number of decimal upto which you need solution to be corr
 root = newton_raphson(x0, tols)
 round_root = round(root, dec)
 if root is not None:
-    print("Root: ", round_root)
+    print("Root: ", round_root) # This will print the root 
 else:
     print("No root found")
