@@ -1,27 +1,36 @@
-def newton_raphson(f, f_der, x0, tolerance=1e-6, max_iterations=100):
-    x = x0
-    for i in range(max_iterations):
-        f_val = f(x)
-        if abs(f_val) < tolerance:
-            return x, i
-        f_der_val = f_der(x)
-        if f_der_val == 0:
+from math import e, sin, cos, log10, tan
+
+def f(x):
+    return eval(fx)  # evaluate the user input as a Python expression
+
+def df(x):
+    h = 1e-6  # small step size
+    return (f(x + h) - f(x)) / h  # approximate the derivative using a finite difference
+
+def newton_raphson(x0, tols):
+    """
+    x0: initial guess
+    eps: tolerance
+    """
+    xn = x0
+    while True:
+        fxn = f(xn)
+        if abs(fxn) < tols:
+            return xn
+        Dfxn = df(xn)
+        if Dfxn == 0:
             return None
-        x -= f_val / f_der_val
-    return None
+        xn = xn - fxn/Dfxn
 
-# Prompt the user for the function, its derivative, and the initial guess for the root
-f_str = input("Enter the function f(x): ")
-f_der_str = input("Enter the derivative of f(x): ")
-x0 = float(input("Enter the initial guess for the root: "))
-
-# Define the function and its derivative as lambda functions
-f = lambda x: eval(f_str)
-f_der = lambda x: eval(f_der_str)
-
-# Find the root using the Newton-Raphson method
-root, iterations = newton_raphson(f, f_der, x0)
+# main program
+fx = input("Enter f(x): ")
+x0 = float(input("Enter initial guess: "))
+tols = 1e-6
+# tols = float(input("Enter tolerance: "))
+dec = int(input("Enter number of decimal upto which you need solution to be correct: "))
+root = newton_raphson(x0, tols)
+round_root = round(root, dec)
 if root is not None:
-    print(f"Root found: {root:.6f} after {iterations} iterations.")
+    print("Root: ", round_root)
 else:
-    print("Root not found.")
+    print("No root found")
